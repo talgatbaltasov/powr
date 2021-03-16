@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="add_button_box">
+        <button class="add_button" onmouseover="mouseOver(this)">Add</button>
+        <div class="buttons">
+          <button class="box_button" onclick="changeColor(this)">Box</button>
+          <button onclick="addContainer(this)">Container</button>
+        </div>
+      </div>
+    </div>
+    <div class="container" style="display: none" id="main_container">
+      <div class="add_button_box">
+        <button class="add_button" onmouseover="mouseOver(this)">Add</button>
+        <div class="buttons">
+          <button class="box_button" onclick="changeColor(this)">Box</button>
+          <button onclick="addContainer(this)">Container</button>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script>
+    let boxes = document.getElementsByClassName("add_button_box");
+    for (let index = 0; index < boxes.length; index++) {
+      const element = boxes[index];
+      element.addEventListener("mouseleave", mouseLeave);
+    }
+    function mouseOver(e) {
+      e.nextElementSibling.style.display = "block";
+    }
+
+    function mouseLeave(e) {
+      for (
+        let index = 0;
+        index < document.getElementsByClassName("buttons").length;
+        index++
+      ) {
+        const element = document.getElementsByClassName("buttons")[index];
+        element.style.display = "none";
+      }
+    }
+
+    function changeColor(t) {
+      t.style.backgroundColor =
+        "#" + Math.floor(Math.random() * 16777215).toString(16);
+    }
+
+    function addContainer(t) {
+      let clone = document.getElementById("main_container").cloneNode(true);
+      clone.removeAttribute("id");
+      clone.removeAttribute("style");
+      clone.lastElementChild.addEventListener("mouseleave", mouseLeave);
+      t.parentElement.parentElement.parentElement.appendChild(clone);
+    }
+  </script>
+  <style>
+    body {
+      padding: 5rem;
+    }
+    .container {
+      position: relative;
+      text-align: center;
+      margin: 1rem;
+    }
+
+    .add_button_box {
+      display: inline-block;
+      height: 150px;
+      width: 250px;
+    }
+    button {
+      padding: 1rem 2rem;
+      width: 120px;
+    }
+
+    .buttons {
+      display: none;
+      position: relative;
+      top: -20px;
+    }
+
+    .box_button {
+      background-color: orange;
+    }
+  </style>
+</html>

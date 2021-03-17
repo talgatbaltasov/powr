@@ -8,32 +8,38 @@
   </head>
   <body>
     <div class="container">
-      <div class="add_button_box">
-        <button class="add_button" onmouseover="mouseOver(this)">Add</button>
+      <div class="add_button" onmouseover="mouseOver(this)">
+        Add
         <div class="buttons">
-          <button class="box_button" onclick="changeColor(this)">Box</button>
+          <button class="box_button" onclick="addBox(this)">Box</button>
           <button onclick="addContainer(this)">Container</button>
         </div>
       </div>
     </div>
     <div class="container" style="display: none" id="main_container">
-      <div class="add_button_box">
-        <button class="add_button" onmouseover="mouseOver(this)">Add</button>
+      <div class="add_button" onmouseover="mouseOver(this)">
+        Add
         <div class="buttons">
-          <button class="box_button" onclick="changeColor(this)">Box</button>
+          <button class="box_button" onclick="addBox(this)">Box</button>
           <button onclick="addContainer(this)">Container</button>
         </div>
       </div>
     </div>
+    <div
+      id="box"
+      style="display: none"
+      class="box"
+      onclick="changeColor(this)"
+    ></div>
   </body>
   <script>
-    let boxes = document.getElementsByClassName("add_button_box");
+    let boxes = document.getElementsByClassName("add_button");
     for (let index = 0; index < boxes.length; index++) {
       const element = boxes[index];
       element.addEventListener("mouseleave", mouseLeave);
     }
     function mouseOver(e) {
-      e.nextElementSibling.style.display = "block";
+      e.firstElementChild.style.display = "block";
     }
 
     function mouseLeave(e) {
@@ -45,6 +51,13 @@
         const element = document.getElementsByClassName("buttons")[index];
         element.style.display = "none";
       }
+    }
+
+    function addBox(t) {
+      var box = document.getElementById("box").cloneNode(true);
+      box.removeAttribute("id");
+      box.removeAttribute("style");
+      t.parentElement.parentElement.parentElement.prepend(box);
     }
 
     function changeColor(t) {
@@ -65,16 +78,20 @@
       padding: 5rem;
     }
     .container {
-      position: relative;
+      display: inline-block;
+      padding: 2rem;
       text-align: center;
       margin: 1rem;
+      border: 1px solid black;
     }
 
-    .add_button_box {
-      display: inline-block;
-      height: 150px;
-      width: 250px;
+    .add_button {
+      border: 1px solid black;
+      float: left;
+      padding: 1rem 2rem;
+      position: relative;
     }
+
     button {
       padding: 1rem 2rem;
       width: 120px;
@@ -82,12 +99,18 @@
 
     .buttons {
       display: none;
-      position: relative;
-      top: -20px;
+      position: absolute;
+      top: -30px;
+      width: 250px;
+      left: calc(50% - 125px);
     }
 
-    .box_button {
+    .box {
       background-color: orange;
+      height: 100px;
+      width: 100px;
+      margin: 0.5rem;
+      float: left;
     }
   </style>
 </html>
